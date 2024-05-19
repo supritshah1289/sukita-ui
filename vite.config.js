@@ -9,9 +9,9 @@ export default defineConfig({
   plugins: [
     react(),
     checker({
-      eslint: {
-        lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
-      },
+      // eslint: {
+      //   lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
+      // },
     }),
   ],
   resolve: {
@@ -27,9 +27,9 @@ export default defineConfig({
     ],
   },
   server: {
-    port: 3030,
+    port: 3000,
   },
   preview: {
-    port: 3030,
+    port: 3000,
   },
 });

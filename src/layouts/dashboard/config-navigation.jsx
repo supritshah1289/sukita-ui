@@ -8,23 +8,27 @@ const icon = (name) => (
 
 const navConfig = [
   {
-    title: 'dashboard',
-    path: '/',
+    title: "Dashboard",
+    path: "/dashboard",
+    isPublic: false,
     icon: icon('ic_analytics'),
   },
   {
-    title: 'user',
+    title: 'Profile',
     path: '/user',
+    isPublic: false,
     icon: icon('ic_user'),
   },
   {
-    title: 'product',
+    title: 'My Items',
     path: '/products',
+    isPublic: false,
     icon: icon('ic_cart'),
   },
   {
-    title: 'blog',
+    title: 'Saved',
     path: '/blog',
+    isPublic: false,
     icon: icon('ic_blog'),
   },
   {
@@ -33,8 +37,15 @@ const navConfig = [
     icon: icon('ic_lock'),
   },
   {
-    title: 'Not found',
-    path: '/404',
+    title: 'Inbox',
+    path: '/inbox',
+    isPublic: false,
+    icon: icon('ic_lock'),
+  },
+  {
+    title: 'Post',
+    path: '/post',
+    isPublic: false,
     icon: icon('ic_disabled'),
   },
 ];
