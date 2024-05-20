@@ -16,6 +16,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useRouter } from 'src/routes/hooks';
 
 import { bgGradient } from 'src/theme/css';
+import { GOOGLE_AUTH_URL } from 'src/constants';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
@@ -115,6 +116,7 @@ export default function LoginView() {
               color="inherit"
               variant="outlined"
               sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              href={GOOGLE_AUTH_URL}
             >
               <Iconify icon="eva:google-fill" color="#DF3E30" />
             </Button>
