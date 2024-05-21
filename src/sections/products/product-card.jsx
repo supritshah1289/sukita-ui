@@ -92,14 +92,3 @@ export default function ShopProductCard({ product }) {
 ShopProductCard.propTypes = {
   product: PropTypes.object,
 };
-
-
-// const ItemsList = ({ items, isDelete }) => {
-//   return (
-//     <Grid container spacing={2}>
-//       {items.map((item) => (
-//         <ItemCard key={item.id} item={item} isDelete={isDelete} />
-//       ))}
-//     </Grid>
-//   );
-// };
