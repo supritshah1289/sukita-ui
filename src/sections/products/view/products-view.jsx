@@ -9,16 +9,26 @@ import ProductCard from '../product-card';
 import ProductSort from '../product-sort';
 import ProductFilters from '../product-filters';
 import ProductCartWidget from '../product-cart-widget';
-import { useGetItemsQuery } from '../../../redux/services/apiSlice';
+import { useGetCurrentUserItemsQuery } from '../../../redux/services/apiSlice';
 
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
   const [openFilter, setOpenFilter] = useState(false);
 
-  const { data } = useGetItemsQuery();
+  const currentUser = {
+      "email": "nikitapanchal4509@gmail.com",
+      "emailVerified": false,
+      "id": 4,
+      "imageUrl": "https://lh3.googleusercontent.com/a/ACg8ocKtBwnFX-xcpJ1A6yHXYLhdGm18c6Ld1bovtSzN-1SeeSJbnjQj=s96-c",
+      "name": "Nikita Panchal",
+      "provider": "google",
+      "providerId": "112426427262846637281"
+  }
 
-  console.log("data from product view", JSON.stringify(data));
+  const { data } = useGetCurrentUserItemsQuery(
+    currentUser.id
+  );
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
