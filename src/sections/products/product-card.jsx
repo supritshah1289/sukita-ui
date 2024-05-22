@@ -14,22 +14,6 @@ import { ColorPreview } from 'src/components/color-utils';
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ product }) {
-  console.log("product", JSON.stringify(product));
-  // const renderStatus = (
-  //   <Label
-  //     variant="filled"
-  //     color={(product.status === 'sale' && 'error') || 'info'}
-  //     sx={{
-  //       zIndex: 9,
-  //       top: 16,
-  //       right: 16,
-  //       position: 'absolute',
-  //       textTransform: 'uppercase',
-  //     }}
-  //   >
-  //     {product.status}
-  //   </Label>
-  // );
 
   const renderImg = (
     <Box
@@ -93,13 +77,3 @@ ShopProductCard.propTypes = {
   product: PropTypes.object,
 };
 
-
-// const ItemsList = ({ items, isDelete }) => {
-//   return (
-//     <Grid container spacing={2}>
-//       {items.map((item) => (
-//         <ItemCard key={item.id} item={item} isDelete={isDelete} />
-//       ))}
-//     </Grid>
-//   );
-// };
