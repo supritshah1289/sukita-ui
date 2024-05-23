@@ -42,7 +42,7 @@ export default function Header({ onOpenNav }) {
       
       <Stack direction="row" alignItems="center" spacing={1}>
         {/* <NotificationsPopover /> */}
-       {authenticated ?  <AccountPopover /> : null }
+       {/* {authenticated ?  <AccountPopover /> : null } */}
       </Stack>
     </>
   );
