@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
@@ -14,7 +14,6 @@ import { useGetItemsQuery } from '../../../redux/services/apiSlice';
 
 export default function ProductsView() {
   const [openFilter, setOpenFilter] = useState(false);
-
   const { data, isLoading} = useGetItemsQuery();
 
 

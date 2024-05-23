@@ -3,7 +3,6 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 
-console.log("Env variables test: " +import.meta.env.VITE_API_BASE_URL);
 
 export const OAUTH2_REDIRECT_URI = import.meta.env.VITE_OAUTH_REDIRECT_URI;
 // export const OAUTH2_REDIRECT_URI =

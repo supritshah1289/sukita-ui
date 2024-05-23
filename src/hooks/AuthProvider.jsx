@@ -8,8 +8,8 @@ const AuthProvider = ({ children }) => {
     
   const [currentUser, setCurrentUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
-  const [isLoading, setIsloading] = useState(false);
-  const [token, setToken ]  = useState(localStorage.getItem(ACCESS_TOKEN) || "");
+  const [isLoading, setIsloading] = useState(true);
+  const [token, setToken ]  = useState("");
 
   useEffect(() => {
     loadCurrentlyLoggedInUser();
@@ -30,14 +30,15 @@ const AuthProvider = ({ children }) => {
 
   
   const getCurrentUser = () => {
-    if(!token) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
-    return request({
+    const user =  request({
         url: API_BASE_URL + "/user/me",
         method: 'GET'
     });
+    return user;
 
   }
 
@@ -48,7 +49,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, currentUser, getCurrentUser, logOut }}>
+    <AuthContext.Provider value={{ token, currentUser, setToken, authenticated, loadCurrentlyLoggedInUser, logOut }}>
       {children}
     </AuthContext.Provider>
   )

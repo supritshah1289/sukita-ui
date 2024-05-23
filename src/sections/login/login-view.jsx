@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -17,7 +17,6 @@ import { useRouter } from 'src/routes/hooks';
 
 import { bgGradient } from 'src/theme/css';
 import { GOOGLE_AUTH_URL } from 'src/constants';
-
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
@@ -25,10 +24,10 @@ import Iconify from 'src/components/iconify';
 
 export default function LoginView() {
   const theme = useTheme();
-
   const router = useRouter();
-
   const [showPassword, setShowPassword] = useState(false);
+
+
 
   const handleClick = () => {
     router.push('/dashboard');

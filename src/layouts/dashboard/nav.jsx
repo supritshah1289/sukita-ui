@@ -22,21 +22,21 @@ import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
-import { useAuth } from 'src/hooks/AuthProvider';
+
 
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
-  const auth = useAuth();
   const upLg = useResponsive('up', 'lg');
-  console.log("Current User: " + JSON.stringify(auth.currentUser));
+
+
 
   useEffect(() => {
     if (openNav) {
       onCloseNav();
     }
-  
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
