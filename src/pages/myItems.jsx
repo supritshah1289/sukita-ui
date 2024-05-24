@@ -21,7 +21,7 @@ export default function ProductsPage() {
         <title>My Posted Items list </title>
       </Helmet>
 
-      {data ? <ProductsView data={data} isLoading={isLoading}/> : "no data available" }
+      {data ? <ProductsView data={data} isLoading={isLoading} isMyItem={true} /> : "no data available" }
     </>
   );
 }

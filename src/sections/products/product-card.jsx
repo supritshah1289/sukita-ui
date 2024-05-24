@@ -8,9 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-// import SendIcon from "@mui/icons-material/Send";
 import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
@@ -22,7 +19,7 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function ShopProductCard({ product }) {
+export default function ShopProductCard({ product, isMyItem }) {
   const [getUserEmail, { isEmailLoading, isEmailError }] =useUserEmailByIdMutation();
   const [deleteItem, { isLoading, isError }] = useDeleteItemMutation();
   const auth = useAuth();
@@ -83,15 +80,25 @@ export default function ShopProductCard({ product }) {
   const renderActions = (
     <Stack direction="row"  justifyContent="space-between">
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <Iconify icon="ic:baseline-favorite" />
-            </IconButton>
-            <IconButton aria-label="share" onClick={handleGetUserByEmail}>
-              <Iconify icon="streamline:send-email" />
-            </IconButton>
-              <IconButton aria-label="delete" onClick={handleDelete}>
+            
+            { isMyItem ? 
+            (
+               <IconButton aria-label="delete" onClick={handleDelete}>
                 <Iconify icon="ic:twotone-delete" />
+               </IconButton>
+            ) : 
+            (
+            <>
+              <IconButton aria-label="add to favorites">
+                <Iconify icon="ic:baseline-favorite" />
               </IconButton>
+              <IconButton aria-label="share" onClick={handleGetUserByEmail}>
+                <Iconify icon="streamline:send-email" />
+              </IconButton>
+            </>
+            ) 
+            }
+
           </CardActions>
         </Stack>
   );

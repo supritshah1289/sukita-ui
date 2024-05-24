@@ -11,7 +11,7 @@ import ProductFilters from '../product-filters';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsView({data, isLoading}) {
+export default function ProductsView({data, isLoading, isMyItem}) {
   const [openFilter, setOpenFilter] = useState(false);
 
 
@@ -50,7 +50,7 @@ export default function ProductsView({data, isLoading}) {
       <Grid container spacing={3}>
         {!!data && data.map((product) => (
           <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} isLoading={isLoading} />
+            <ProductCard product={product} isLoading={isLoading} isMyItem={isMyItem} />
           </Grid>
         ))}
       </Grid>
