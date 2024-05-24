@@ -5,15 +5,20 @@ import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
+import Avatar from "@mui/material/Avatar";
+import CardHeader from "@mui/material/CardHeader";
 import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import { ColorPreview } from 'src/components/color-utils';
+import moment from "moment";
 
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ product }) {
+
+
+  let itemPostCreatedDate = moment(product.createdAt).format("MMMM Do YYYY");
 
   const renderImg = (
     <Box
@@ -36,16 +41,6 @@ export default function ShopProductCard({ product }) {
 
   const renderPrice = (
     <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: 'text.disabled',
-          textDecoration: 'line-through',
-        }}
-      >
-        {product.price && fCurrency(product.price)}
-      </Typography>
       &nbsp;
       {fCurrency(product.price)}
     </Typography>
@@ -53,9 +48,16 @@ export default function ShopProductCard({ product }) {
 
   return (
     <Card>
+      <CardHeader
+          avatar={
+            <Avatar
+              src={product.userDetails.imageUrl}
+            ></Avatar>
+          }
+          title={product.userDetails.name}
+          subheader={`Posted on: ${itemPostCreatedDate}`}
+        />
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {/* {product.status && renderStatus} */}
-
         {renderImg}
       </Box>
 
@@ -63,11 +65,16 @@ export default function ShopProductCard({ product }) {
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
           {product.title}
         </Link>
-
+        
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           {/* <ColorPreview colors={product.colors} /> */}
           {renderPrice}
         </Stack>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between" variant="p">
+          {product.description}
+        </Stack>
+        
       </Stack>
     </Card>
   );

@@ -19,7 +19,7 @@ export default function OAuth2NavigateHandler() {
     if (token) {
 
       localStorage.setItem(ACCESS_TOKEN, token);
-      
+
       //api call to get the current user
       auth.loadCurrentlyLoggedInUser();
       
@@ -29,6 +29,6 @@ export default function OAuth2NavigateHandler() {
     }
   }, [token]);
 
-  return token ? <Navigate to="/products" /> : <Navigate to="/login" />;
+  return token ? <Navigate to="/" /> : <Navigate to="/login" />;
 
 }

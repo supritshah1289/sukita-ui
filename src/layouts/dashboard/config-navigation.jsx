@@ -27,7 +27,7 @@ export const navConfig = [
   },
   {
     title: 'Saved',
-    path: '/blog',
+    path: '/saved',
     isPublic: false,
     icon: icon('ic_blog'),
   },
@@ -45,7 +45,6 @@ export const navConfig = [
   },
   {
     title: 'Logout',
-    path: null,
     icon: icon('ic_lock'),
   }
 ];

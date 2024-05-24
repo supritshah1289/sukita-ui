@@ -15,13 +15,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
   <HelmetProvider>
-    <AuthProvider>
     <BrowserRouter>
+    <AuthProvider>
       <Suspense>
         <App />
       </Suspense>
-    </BrowserRouter>
     </AuthProvider>
+    </BrowserRouter>
   </HelmetProvider>
   </Provider>
 );

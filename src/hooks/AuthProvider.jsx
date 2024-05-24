@@ -1,11 +1,8 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { API_BASE_URL, ACCESS_TOKEN } from "src/constants";
-
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    
   const [currentUser, setCurrentUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
   const [isLoading, setIsloading] = useState(true);
@@ -18,7 +15,6 @@ const AuthProvider = ({ children }) => {
   function loadCurrentlyLoggedInUser() {
     getCurrentUser()
       .then((response) => {
-        console.log(response);
         setCurrentUser(response);
         setAuthenticated(true);
         setIsloading(false);
@@ -43,13 +39,15 @@ const AuthProvider = ({ children }) => {
   }
 
   const logOut = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
     setCurrentUser(null);
     setToken("");
-    localStorage.removeItem(ACCESS_TOKEN);
+    setAuthenticated(false);
+    
   };
 
   return (
-    <AuthContext.Provider value={{ token, currentUser, setToken, authenticated, loadCurrentlyLoggedInUser, logOut }}>
+    <AuthContext.Provider value={{ token, currentUser, setToken, authenticated,setAuthenticated, loadCurrentlyLoggedInUser, logOut }}>
       {children}
     </AuthContext.Provider>
   )

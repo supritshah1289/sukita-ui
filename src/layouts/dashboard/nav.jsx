@@ -10,7 +10,7 @@ import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
 
-import { usePathname } from 'src/routes/hooks';
+import { usePathname, useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
@@ -23,7 +23,6 @@ import Scrollbar from 'src/components/scrollbar';
 import { NAV } from './config-layout';
 import {login, navConfig} from './config-navigation';
 import { useAuth } from 'src/hooks/AuthProvider';
-
 
 // ----------------------------------------------------------------------
 
@@ -175,11 +174,12 @@ Nav.propTypes = {
 
 function NavItem({ item }) {
   const auth = useAuth();
-  
+  const navigate = useRouter();
+
   const handleLogout = () => {
     auth.logOut();
-    //navigate to dashboard
-    router.push('/');
+    window.history.pushState({}, "", "/");
+    navigate.push("/")
   }
 
 
