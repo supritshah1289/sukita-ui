@@ -10,7 +10,7 @@ import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
 
-import { usePathname, useRouter } from 'src/routes/hooks';
+import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
@@ -174,12 +174,9 @@ Nav.propTypes = {
 
 function NavItem({ item }) {
   const auth = useAuth();
-  const navigate = useRouter();
 
   const handleLogout = () => {
     auth.logOut();
-    window.history.pushState({}, "", "/");
-    navigate.push("/")
   }
 
 

@@ -15,7 +15,7 @@ import { useAuth } from "src/hooks/AuthProvider";
 //TODO: fetch list of categories and populate the dropdown for user to pick
 //TODO: Update the current userId and CategoryId when sending a request
 
-const Post = ({ onSubmit }) => {
+const Post = () => {
 
   const auth = useAuth();
   const user = auth.currentUser;
@@ -78,7 +78,6 @@ const Post = ({ onSubmit }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           fullWidth
-          margin="normal"
           required
         />
         <TextField
@@ -86,7 +85,7 @@ const Post = ({ onSubmit }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           fullWidth
-          margin="normal"
+          margin="dense"
           multiline
           required
         />
@@ -94,7 +93,7 @@ const Post = ({ onSubmit }) => {
           value={categoryId}
           onChange={(e) => setcategoryId(e.target.value)}
           fullWidth
-          margin="normal"
+          margin="dense"
           displayEmpty
           required
         >

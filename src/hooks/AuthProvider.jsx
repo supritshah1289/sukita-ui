@@ -43,6 +43,7 @@ const AuthProvider = ({ children }) => {
     setCurrentUser(null);
     setToken("");
     setAuthenticated(false);
+    <Navigate to="/" />;
     
   };
 

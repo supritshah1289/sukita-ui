@@ -8,13 +8,11 @@ import Typography from '@mui/material/Typography';
 import ProductCard from '../product-card';
 import ProductSort from '../product-sort';
 import ProductFilters from '../product-filters';
-import { useGetItemsQuery } from '../../../redux/services/apiSlice';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsView() {
+export default function ProductsView({data, isLoading}) {
   const [openFilter, setOpenFilter] = useState(false);
-  const { data, isLoading} = useGetItemsQuery();
 
 
   const handleOpenFilter = () => {

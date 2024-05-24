@@ -21,7 +21,7 @@ export const navConfig = [
   },
   {
     title: 'My Items',
-    path: '/products',
+    path: '/myitems',
     isPublic: false,
     icon: icon('ic_cart'),
   },
@@ -45,6 +45,7 @@ export const navConfig = [
   },
   {
     title: 'Logout',
+    path: "/",
     icon: icon('ic_lock'),
   }
 ];

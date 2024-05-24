@@ -25,7 +25,6 @@ export default function Header({ onOpenNav }) {
   const theme = useTheme();
   const lgUp = useResponsive('up', 'lg');
   const auth = useAuth();
-  const {authenticated} = auth;
 
   const renderContent = (
     <>
