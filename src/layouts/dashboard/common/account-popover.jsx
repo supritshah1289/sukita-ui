@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { account } from 'src/_mock/account';
+import { useAuth } from 'src/hooks/AuthProvider';
 
 // ----------------------------------------------------------------------
 
@@ -32,10 +33,24 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const auth = useAuth();
+  
+  const { authenticated,currentUser,logOut } = auth;
+
+  console.log("isLoading popover: " +JSON.stringify(auth.isLoading));
+  console.log("User popover: " +JSON.stringify(auth.currentUser));
+  console.log("authenticated popover: " +JSON.stringify(auth.authenticated));
+  
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
+
+  const handleLogout = () => {
+    logOut();
+    //navigate to dashboard
+    router.push('/');
+  }
 
   const handleClose = () => {
     setOpen(null);
@@ -56,15 +71,15 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          src={authenticated ? currentUser.imageUrl : ""}
+          alt={authenticated ? currentUser.name : ""}
           sx={{
             width: 36,
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {account.displayName.charAt(0).toUpperCase()}
+          {authenticated ? currentUser.name.charAt(0).toUpperCase() : ""}
         </Avatar>
       </IconButton>
 
@@ -85,10 +100,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {authenticated ? currentUser.name : ""}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {authenticated ? currentUser.email : ""}
           </Typography>
         </Box>
 
@@ -105,7 +120,7 @@ export default function AccountPopover() {
         <MenuItem
           disableRipple
           disableTouchRipple
-          onClick={handleClose}
+          onClick={handleLogout}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
           Logout

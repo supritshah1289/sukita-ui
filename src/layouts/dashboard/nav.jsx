@@ -21,19 +21,25 @@ import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
-import navConfig from './config-navigation';
+import {login, navConfig} from './config-navigation';
+import { useAuth } from 'src/hooks/AuthProvider';
 
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
-
   const upLg = useResponsive('up', 'lg');
+  const auth = useAuth();
+
+  const {authenticated, currentUser} = auth;
+  const menu = authenticated ? navConfig : login;
+
 
   useEffect(() => {
     if (openNav) {
       onCloseNav();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -50,10 +56,10 @@ export default function Nav({ openNav, onCloseNav }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
-      <Avatar src={account.photoURL} alt="photoURL" />
+      <Avatar src={authenticated ? currentUser.imageUrl : account.photoURL} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{account.displayName}</Typography>
+        <Typography variant="subtitle2">{authenticated ? currentUser.name  : account.displayName}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {account.role}
@@ -64,11 +70,13 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
-      {navConfig.map((item) => (
+      {menu.map((item) => (
         <NavItem key={item.title} item={item} />
       ))}
     </Stack>
   );
+
+
 
   const renderUpgrade = (
     <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
@@ -117,8 +125,6 @@ export default function Nav({ openNav, onCloseNav }) {
       {renderMenu}
 
       <Box sx={{ flexGrow: 1 }} />
-
-      {renderUpgrade}
     </Scrollbar>
   );
 
@@ -164,7 +170,16 @@ Nav.propTypes = {
 
 // ----------------------------------------------------------------------
 
+
+
 function NavItem({ item }) {
+  const auth = useAuth();
+
+  const handleLogout = () => {
+    auth.logOut();
+  }
+
+
   const pathname = usePathname();
 
   const active = item.path === pathname;
@@ -189,6 +204,7 @@ function NavItem({ item }) {
           },
         }),
       }}
+      onClick={item.title === 'Logout' ? handleLogout : null}
     >
       <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
         {item.icon}

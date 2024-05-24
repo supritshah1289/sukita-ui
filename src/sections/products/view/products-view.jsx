@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
@@ -8,17 +8,12 @@ import Typography from '@mui/material/Typography';
 import ProductCard from '../product-card';
 import ProductSort from '../product-sort';
 import ProductFilters from '../product-filters';
-import ProductCartWidget from '../product-cart-widget';
-import { useGetItemsQuery } from '../../../redux/services/apiSlice';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsView() {
+export default function ProductsView({data, isLoading}) {
   const [openFilter, setOpenFilter] = useState(false);
 
-  const { data } = useGetItemsQuery();
-
-  console.log("data from product view", JSON.stringify(data));
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -34,7 +29,7 @@ export default function ProductsView() {
         Items
       </Typography>
 
-      <Stack
+      {/* <Stack
         direction="row"
         alignItems="center"
         flexWrap="wrap-reverse"
@@ -50,17 +45,15 @@ export default function ProductsView() {
 
           <ProductSort />
         </Stack>
-      </Stack>
+      </Stack> */}
 
       <Grid container spacing={3}>
         {!!data && data.map((product) => (
           <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
+            <ProductCard product={product} isLoading={isLoading} />
           </Grid>
         ))}
       </Grid>
-
-      <ProductCartWidget />
     </Container>
   );
 }

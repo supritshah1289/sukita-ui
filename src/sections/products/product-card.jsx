@@ -1,35 +1,58 @@
 import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
+import Avatar from "@mui/material/Avatar";
+import CardHeader from "@mui/material/CardHeader";
+import IconButton from "@mui/material/IconButton";
+import CardActions from "@mui/material/CardActions";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import FavoriteIcon from "@mui/icons-material/Favorite";
+// import SendIcon from "@mui/icons-material/Send";
 import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import { ColorPreview } from 'src/components/color-utils';
+import moment from "moment";
+import { useUserEmailByIdMutation, useDeleteItemMutation } from 'src/redux/services/apiSlice';
+import { useAuth } from 'src/hooks/AuthProvider';
+import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ product }) {
-  console.log("product", JSON.stringify(product));
-  // const renderStatus = (
-  //   <Label
-  //     variant="filled"
-  //     color={(product.status === 'sale' && 'error') || 'info'}
-  //     sx={{
-  //       zIndex: 9,
-  //       top: 16,
-  //       right: 16,
-  //       position: 'absolute',
-  //       textTransform: 'uppercase',
-  //     }}
-  //   >
-  //     {product.status}
-  //   </Label>
-  // );
+  const [getUserEmail, { isEmailLoading, isEmailError }] =useUserEmailByIdMutation();
+  const [deleteItem, { isLoading, isError }] = useDeleteItemMutation();
+  const auth = useAuth();
+  const {authenticated} = auth; 
+
+  const handleDelete = async () => {
+    try {
+      // Call the deleteItem mutation function with the item ID as an argument
+      const response = await deleteItem(product.id);
+      //TODO: toast notify user 
+
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  const handleGetUserByEmail = async () => {
+
+    try {
+      const response = await getUserEmail(product.userDetails.id);
+      const recipientEmail = response.data.email;
+      const subject = encodeURIComponent(`${product.title}`);
+      const mailtoUrl = `mailto:${recipientEmail}?subject=${subject}`;
+      window.location.href = mailtoUrl;
+    } catch (error) {
+      console.log("User by id does not exist: ", error);
+    }
+  };
+
+  let itemPostCreatedDate = moment(product.createdAt).format("MMMM Do YYYY");
 
   const renderImg = (
     <Box
@@ -52,26 +75,39 @@ export default function ShopProductCard({ product }) {
 
   const renderPrice = (
     <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: 'text.disabled',
-          textDecoration: 'line-through',
-        }}
-      >
-        {product.price && fCurrency(product.price)}
-      </Typography>
       &nbsp;
       {fCurrency(product.price)}
     </Typography>
   );
 
+  const renderActions = (
+    <Stack direction="row"  justifyContent="space-between">
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <Iconify icon="ic:baseline-favorite" />
+            </IconButton>
+            <IconButton aria-label="share" onClick={handleGetUserByEmail}>
+              <Iconify icon="streamline:send-email" />
+            </IconButton>
+              <IconButton aria-label="delete" onClick={handleDelete}>
+                <Iconify icon="ic:twotone-delete" />
+              </IconButton>
+          </CardActions>
+        </Stack>
+  );
+
   return (
     <Card>
+      <CardHeader
+          avatar={
+            <Avatar
+              src={""}
+            ></Avatar>
+          }
+          title={product.userDetails.name}
+          subheader={`Posted on: ${itemPostCreatedDate}`}
+        />
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {/* {product.status && renderStatus} */}
-
         {renderImg}
       </Box>
 
@@ -79,11 +115,17 @@ export default function ShopProductCard({ product }) {
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
           {product.title}
         </Link>
-
+        
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           {/* <ColorPreview colors={product.colors} /> */}
           {renderPrice}
         </Stack>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between" variant="p">
+          {product.description}
+        </Stack>
+
+        { authenticated ? renderActions :  null }
       </Stack>
     </Card>
   );
@@ -93,13 +135,3 @@ ShopProductCard.propTypes = {
   product: PropTypes.object,
 };
 
-
-// const ItemsList = ({ items, isDelete }) => {
-//   return (
-//     <Grid container spacing={2}>
-//       {items.map((item) => (
-//         <ItemCard key={item.id} item={item} isDelete={isDelete} />
-//       ))}
-//     </Grid>
-//   );
-// };

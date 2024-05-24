@@ -16,15 +16,15 @@ import Iconify from 'src/components/iconify';
 import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
-import LanguagePopover from './common/language-popover';
 import NotificationsPopover from './common/notifications-popover';
+import { useAuth } from 'src/hooks/AuthProvider';
 
 // ----------------------------------------------------------------------
 
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
-
   const lgUp = useResponsive('up', 'lg');
+  const auth = useAuth();
 
   const renderContent = (
     <>
@@ -38,13 +38,15 @@ export default function Header({ onOpenNav }) {
 
       <Box sx={{ flexGrow: 1 }} />
 
+      
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
-        <NotificationsPopover />
-        <AccountPopover />
+        {/* <NotificationsPopover /> */}
+       {/* {authenticated ?  <AccountPopover /> : null } */}
       </Stack>
     </>
   );
+
+
 
   return (
     <AppBar

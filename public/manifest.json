@@ -1,6 +1,6 @@
 {
-  "short_name": "Minimal App",
-  "name": "React Material Minimal UI Kit",
+  "short_name": "Sukita",
+  "name": "Platform where you can list all your services. You have control to contact the consumer instead of scammer finding out your numnber and spamming you",
   "icons": [
     {
       "src": "favicon/android-chrome-192x192.png",

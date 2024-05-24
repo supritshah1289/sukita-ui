@@ -1,17 +1,20 @@
 import { Helmet } from 'react-helmet-async';
 
 import { ProductsView } from 'src/sections/products/view';
-
+import { useGetItemsQuery } from 'src/redux/services/apiSlice';
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
+  const {data, isLoading} = useGetItemsQuery();
+  console.log("data: " +JSON.stringify(data));
+
   return (
     <>
       <Helmet>
-        <title> Products | Minimal UI </title>
+        <title>  List of services </title>
       </Helmet>
 
-      <ProductsView />
+      <ProductsView data={data} isLoading={isLoading}/>
     </>
   );
 }
