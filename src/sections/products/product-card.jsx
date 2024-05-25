@@ -108,7 +108,7 @@ export default function ShopProductCard({ product, isMyItem }) {
       <CardHeader
           avatar={
             <Avatar
-              src={""}
+              src={product.userDetails.imageUrl}
             ></Avatar>
           }
           title={product.userDetails.name}
