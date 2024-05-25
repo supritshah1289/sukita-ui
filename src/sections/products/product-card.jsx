@@ -1,26 +1,29 @@
+import moment from "moment";
 import PropTypes from 'prop-types';
+import { toast } from "react-toastify";
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import Avatar from "@mui/material/Avatar";
+import Typography from '@mui/material/Typography';
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
+
+import { useAuth } from 'src/hooks/AuthProvider';
+
 import { fCurrency } from 'src/utils/format-number';
 
-import Label from 'src/components/label';
-import { ColorPreview } from 'src/components/color-utils';
-import moment from "moment";
-import { useUserEmailByIdMutation, useDeleteItemMutation } from 'src/redux/services/apiSlice';
-import { useAuth } from 'src/hooks/AuthProvider';
+import { useDeleteItemMutation, useUserEmailByIdMutation } from 'src/redux/services/apiSlice';
+
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ product, isMyItem }) {
-  const [getUserEmail, { isEmailLoading, isEmailError }] =useUserEmailByIdMutation();
+  const [getUserEmail, { isEmailLoading, isEmailError }] = useUserEmailByIdMutation();
   const [deleteItem, { isLoading, isError }] = useDeleteItemMutation();
   const auth = useAuth();
   const {authenticated} = auth; 
@@ -29,7 +32,10 @@ export default function ShopProductCard({ product, isMyItem }) {
     try {
       // Call the deleteItem mutation function with the item ID as an argument
       const response = await deleteItem(product.id);
-      //TODO: toast notify user 
+      // TODO: toast notify user 
+      toast.success("Item deleted successfully:", response, {
+        position: toast.POSITION.TOP_CENTER,
+      });
 
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -127,7 +133,7 @@ export default function ShopProductCard({ product, isMyItem }) {
           {/* <ColorPreview colors={product.colors} /> */}
           {renderPrice}
         </Stack>
-
+        
         <Stack direction="row" alignItems="center" justifyContent="space-between" variant="p">
           {product.description}
         </Stack>
