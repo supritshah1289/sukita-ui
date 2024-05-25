@@ -23,12 +23,12 @@ export const navConfig = [
     title: 'Post',
     path: '/post',
     isPublic: false,
-    icon: icon('ic_disabled'),
+    icon: icon('ic_post'),
   },
   {
     title: 'Logout',
     path: "/",
-    icon: icon('ic_lock'),
+    icon: icon('ic_unlock'),
   }
 ];
 
