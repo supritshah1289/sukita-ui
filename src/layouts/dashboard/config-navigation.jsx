@@ -14,28 +14,10 @@ export const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Profile',
-    path: '/user',
-    isPublic: false,
-    icon: icon('ic_user'),
-  },
-  {
     title: 'My Items',
     path: '/myitems',
     isPublic: false,
     icon: icon('ic_cart'),
-  },
-  {
-    title: 'Saved',
-    path: '/saved',
-    isPublic: false,
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'Inbox',
-    path: '/inbox',
-    isPublic: false,
-    icon: icon('ic_lock'),
   },
   {
     title: 'Post',
