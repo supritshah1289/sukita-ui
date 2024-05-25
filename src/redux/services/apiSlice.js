@@ -8,11 +8,11 @@ import { API_BASE_URL } from "../../constants/index";
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  tagTypes: ["items"], // Define tag types for grouping endpoints
+  tagTypes: ["ITEMS"], // Define tag types for grouping endpoints
   endpoints: (builder) => ({
     getItems: builder.query({
       query: () => "/items",
-      providesTags: ["items"], // associate the result of this mutation with the "users" tag
+      providesTags: ["ITEMS"], // associate the result of this mutation with the "users" tag
     }),
     getCagtegories: builder.query({
       query: () => "/categories",
@@ -28,7 +28,7 @@ export const apiSlice = createApi({
     }),
     getCurrentUserItems: builder.query({
       query: (currentUserId) => `/items/myItems/${currentUserId}`,
-      providesTags: ["items"], // associate the result of this mutation with the "users" tag
+      providesTags: ["ITEMS"], // associate the result of this mutation with the "users" tag
     }),
     addItem: builder.mutation({
       query: ({ data, image }) => {
@@ -48,14 +48,14 @@ export const apiSlice = createApi({
           formData: true,
         };
       },
-      invalidatesTags: ["items"], // invalidate all queries/mutations with the "users" tag when this mutation is executed
+      invalidatesTags: ["ITEMS"], // invalidate all queries/mutations with the "users" tag when this mutation is executed
     }),
     deleteItem: builder.mutation({
       query: (itemId) => ({
         url: `/items/${itemId}`,
         method: "DELETE",
-        invalidatesTags: ["items"], // invalidate all queries/mutations with the "users" tag when this mutation is executed
       }),
+      invalidatesTags: ["ITEMS"], // invalidate all queries/mutations with the "users" tag when this mutation is executed
     }),
     updateItem: builder.mutation({
       query: ({ itemId, item }) => ({
