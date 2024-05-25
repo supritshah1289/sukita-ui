@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { toast } from "react-toastify";
 import { ACCESS_TOKEN } from "../constants";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "src/hooks/AuthProvider";
@@ -15,16 +16,19 @@ export default function OAuth2NavigateHandler() {
     // Assume you have some logic to obtain the token after successful login
     // Set the token in localStorage
   
-    //if token is available 
+    // if token is available 
     if (token) {
 
       localStorage.setItem(ACCESS_TOKEN, token);
 
-      //api call to get the current user
+      // api call to get the current user
       auth.loadCurrentlyLoggedInUser();
       
-      //current user object
+      // current user object
       let user = auth.currentUser;
+      toast.success("You're successfully logged in!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       console.log("USER: " +JSON.stringify(user));
     }
   }, [token]);

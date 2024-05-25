@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import {
   TextField,
@@ -9,11 +10,12 @@ import {
   MenuItem,
 } from "@mui/material";
 
-import { useAddItemMutation,useGetCagtegoriesQuery } from "src/redux/services/apiSlice";
 import { useAuth } from "src/hooks/AuthProvider";
 
-//TODO: fetch list of categories and populate the dropdown for user to pick
-//TODO: Update the current userId and CategoryId when sending a request
+import { useAddItemMutation,useGetCagtegoriesQuery } from "src/redux/services/apiSlice";
+
+// TODO: fetch list of categories and populate the dropdown for user to pick
+// TODO: Update the current userId and CategoryId when sending a request
 
 const Post = () => {
 
@@ -61,6 +63,9 @@ const Post = () => {
       setPrice("");
       setcategoryId("");
       setImage(null);
+      toast.success("Item Added successfully.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     } catch (error) {
       console.error("Error adding item:", error);
       // Handle error, display error message, etc.
@@ -86,7 +91,9 @@ const Post = () => {
           onChange={(e) => setDescription(e.target.value)}
           fullWidth
           margin="dense"
-          multiline
+          multiline = "true"
+          rows = "5"
+          size ="medium"
           required
         />
         <Select
@@ -131,7 +138,7 @@ const Post = () => {
           variant="contained"
           color="primary"
           style={{ marginTop: "1rem" }}
-        >
+          >
           Submit
         </Button>
       </form>
