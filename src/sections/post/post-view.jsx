@@ -94,6 +94,7 @@ const Post = () => {
           multiline = "true"
           rows = "5"
           size ="medium"
+          inputProps={{ maxLength: 255 }}
           required
         />
         <Select
