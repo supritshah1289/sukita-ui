@@ -118,7 +118,7 @@ export default function ShopProductCard({ product, isMyItem }) {
             ></Avatar>
           }
           title={product.userDetails.name}
-          subheader={`Posted on: ${itemPostCreatedDate}`}
+          subheader={`Published: ${itemPostCreatedDate}`}
         />
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {renderImg}
