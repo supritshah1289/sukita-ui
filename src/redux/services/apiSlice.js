@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-import { API_BASE_URL } from "../../constants/index";
+import { API_BASE_URL, ACCESS_TOKEN } from "../../constants/index";
 
 // Define our single API slice object
 // Define a service using a base URL and expected endpoints
@@ -8,6 +8,13 @@ import { API_BASE_URL } from "../../constants/index";
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
+  prepareHeaders: (headers) => {
+    const token = sessionStorage.getItem(ACCESS_TOKEN);
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
   tagTypes: ["ITEMS"], // Define tag types for grouping endpoints
   endpoints: (builder) => ({
     getItems: builder.query({
