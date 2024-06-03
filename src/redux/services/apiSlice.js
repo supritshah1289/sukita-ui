@@ -31,6 +31,10 @@ export const apiSlice = createApi({
       query: (userId) => ({
         url: `/user/${userId}`,
         method: "GET",
+        headers: {
+          'content-type': 'text/plain',
+          'Authorization': `Bearer ${sessionStorage.getItem(ACCESS_TOKEN)}`
+      },
       }),
     }),
     getCurrentUserItems: builder.query({
