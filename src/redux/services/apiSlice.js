@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { getTokenFromLocalStorage } from "src/utils/authUtil";
 
 import { API_BASE_URL, ACCESS_TOKEN } from "../../constants/index";
 
@@ -8,8 +9,8 @@ import { API_BASE_URL, ACCESS_TOKEN } from "../../constants/index";
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
-  prepareHeaders: (headers) => {
-    const token = sessionStorage.getItem(ACCESS_TOKEN);
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().user.token;
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
@@ -31,10 +32,16 @@ export const apiSlice = createApi({
       query: (userId) => ({
         url: `/user/${userId}`,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${getTokenFromLocalStorage()}`, // Include access token in the request header
+        },
       }),
     }),
     getCurrentUserItems: builder.query({
       query: (currentUserId) => `/items/myItems/${currentUserId}`,
+      headers: {
+        Authorization: `Bearer ${getTokenFromLocalStorage()}`, // Include access token in the request header
+      },
       providesTags: ["ITEMS"], // associate the result of this mutation with the "users" tag
     }),
     addItem: builder.mutation({

@@ -1,14 +1,18 @@
 import { setupListeners } from "@reduxjs/toolkit/query";
 import {
-  configureStore,
-  // eslint-disable-next-line no-unused-vars, unused-imports/no-unused-imports
-  combineReducers,
+  configureStore
 } from "@reduxjs/toolkit";
 
 import { apiSlice } from "./services/apiSlice";
 
+
+//import reducers 
+import userReducer from './slices/user.slice';
+
+
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
