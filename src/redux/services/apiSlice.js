@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import { getTokenFromLocalStorage } from "src/utils/authUtil";
-
 import { API_BASE_URL, ACCESS_TOKEN } from "../../constants/index";
 
 // Define our single API slice object
@@ -21,6 +20,9 @@ export const apiSlice = createApi({
     getItems: builder.query({
       query: () => "/items",
       providesTags: ["ITEMS"], // associate the result of this mutation with the "users" tag
+    }),
+    getCurrentUser: builder.query({
+      query: () => "/user/me",
     }),
     getCagtegories: builder.query({
       query: () => "/categories",
@@ -45,9 +47,9 @@ export const apiSlice = createApi({
       providesTags: ["ITEMS"], // associate the result of this mutation with the "users" tag
     }),
     addItem: builder.mutation({
+      
       query: ({ data, image }) => {
         const formData = new FormData();
-
         const blob = new Blob([JSON.stringify(data)], {
           type: "application/json",
         });
@@ -84,6 +86,7 @@ export const apiSlice = createApi({
 // Export the auto-generated hook for the `getPosts` query endpoint
 export const {
   useGetItemsQuery,
+  useGetCurrentUserQuery,
   useGetCurrentUserItemsQuery,
   useAddItemMutation,
   useDeleteItemMutation,
@@ -92,5 +95,3 @@ export const {
   useGetAddressesQuery,
   useUserEmailByIdMutation,
 } = apiSlice;
-
-// TODO: get list of categories to display in dropdown
