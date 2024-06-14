@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
 import CardActions from "@mui/material/CardActions";
+import Divider from '@mui/material/Divider';
 
 import { useAuth } from 'src/hooks/AuthProvider';
 
@@ -26,7 +27,9 @@ export default function ShopProductCard({ product, isMyItem }) {
   const [getUserEmail, { isEmailLoading, isEmailError }] = useUserEmailByIdMutation();
   const [deleteItem, { isLoading, isError }] = useDeleteItemMutation();
   const auth = useAuth();
-  const {authenticated} = auth; 
+  const {authenticated} = auth;
+  const address = product.address[0] ? product.address[0] :"";
+  
 
   const handleDelete = async () => {
     try {
@@ -83,6 +86,8 @@ export default function ShopProductCard({ product, isMyItem }) {
     </Typography>
   );
 
+
+
   const renderActions = (
     <Stack direction="row"  justifyContent="space-between">
           <CardActions disableSpacing>
@@ -130,14 +135,21 @@ export default function ShopProductCard({ product, isMyItem }) {
         </Link>
         
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {/* <ColorPreview colors={product.colors} /> */}
-          {renderPrice}
-        </Stack>
-        
-        <Stack direction="row" alignItems="center" justifyContent="space-between" variant="p">
+          <Stack component="span" direction="column" alignItems="center"  >
           {product.description}
+          </Stack>
+          <Stack component="span" direction="column" alignItems="center"  >
+            Price: {renderPrice}
+          </Stack>
         </Stack>
 
+        <Divider />   
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        {address.city ? address.city : ""},{address.state ? address.state : ""}
+        </Stack>
+
+        <Divider />  
         { authenticated ? renderActions :  null }
       </Stack>
     </Card>

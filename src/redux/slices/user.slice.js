@@ -4,6 +4,7 @@ import { ACCESS_TOKEN } from 'src/constants'
 
 const initialState = {
     token: null,
+    currentUser: null,
  }
 
 const userSlice = createSlice({
@@ -20,13 +21,17 @@ const userSlice = createSlice({
         localStorage.removeItem("accessToken");
         state.currentUser = null;
       },
-      setCurrentUser: (state, action) => {
+      setUser: (state, action) => {
         state.currentUser = action.payload;
       },
     },
 })
 
 // Action creators
-export const { login, logout, setCurrentUser } = userSlice.actions;
+export const { login, logout, setUser } = userSlice.actions;
+
+//selectors to access variable
+export const selectCurrentUser = (state) => state.user.currentUser;
 
 export default userSlice.reducer
+

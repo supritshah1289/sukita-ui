@@ -1,5 +1,7 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { API_BASE_URL, ACCESS_TOKEN } from "src/constants";
+import { setUser } from "src/redux/slices/user.slice";
+import { useDispatch } from "react-redux";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -7,6 +9,7 @@ const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [isLoading, setIsloading] = useState(true);
   const [token, setToken ]  = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     loadCurrentlyLoggedInUser();
@@ -18,6 +21,7 @@ const AuthProvider = ({ children }) => {
         setCurrentUser(response);
         setAuthenticated(true);
         setIsloading(false);
+        dispatch(setUser(response));
       })
       .catch((error) => {
         setIsloading(false);
