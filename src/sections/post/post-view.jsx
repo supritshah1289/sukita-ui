@@ -24,6 +24,7 @@ const Post = () => {
   const auth = useAuth();
   const user = auth.currentUser;
   const user1 = useSelector((state) => state.user.currentUser);
+  const [isClicked, setIsClicked] = useState(false);
 
 
   const [title, setTitle] = useState("");
@@ -76,6 +77,7 @@ const Post = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Validate input fields
+    if(!isClicked) setIsClicked(true)
     if (!title || !description || !price) {
       alert("Please fill in all fields");
       return;
@@ -239,6 +241,7 @@ const Post = () => {
           variant="contained"
           color="primary"
           style={{ marginTop: "1rem" }}
+          disabled = {isClicked}
           >
           Submit
         </Button>
