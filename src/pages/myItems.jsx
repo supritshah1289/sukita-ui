@@ -9,7 +9,7 @@ import { useGetCurrentUserItemsQuery } from 'src/redux/services/apiSlice';
 
 import { ProductsView } from 'src/sections/products/view';
 
-import skeletonView from '../components/skeletonView';
+import SkeletonView from '../components/skeletonView';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ export default function ProductsPage() {
 
   const { data, isLoading} = useGetCurrentUserItemsQuery(userId);
 
-  if (isLoading) return <skeletonView/>;
+  if (isLoading) return <SkeletonView />;
 
   return (
     <>
