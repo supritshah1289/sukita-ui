@@ -1,8 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-
 import { useAuth } from 'src/hooks/AuthProvider';
 
 import { useGetCurrentUserItemsQuery } from 'src/redux/services/apiSlice';
