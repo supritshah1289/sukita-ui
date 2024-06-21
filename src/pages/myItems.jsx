@@ -1,8 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 
-import { ProductsView } from 'src/sections/products/view';
-import { useGetCurrentUserItemsQuery } from 'src/redux/services/apiSlice';
 import { useAuth } from 'src/hooks/AuthProvider';
+
+import { useGetCurrentUserItemsQuery } from 'src/redux/services/apiSlice';
+
+import { ProductsView } from 'src/sections/products/view';
+
+import SkeletonView from '../components/skeletonView';
+
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
@@ -13,7 +18,7 @@ export default function ProductsPage() {
 
   const { data, isLoading} = useGetCurrentUserItemsQuery(userId);
 
-  if (isLoading) return <div>Loading....</div>;
+  if (isLoading) return <SkeletonView />;
 
   return (
     <>

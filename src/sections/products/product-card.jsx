@@ -114,15 +114,21 @@ export default function ShopProductCard({ product, isMyItem }) {
         </Stack>
   );
 
+
+  const blurredStyle = {
+    filter: authenticated ? 'none' : 'blur(5px)',
+  };
+
   return (
     <Card>
       <CardHeader
           avatar={
             <Avatar
               src={product.userDetails.imageUrl}
+              style={blurredStyle}
             ></Avatar>
           }
-          title={product.userDetails.name}
+          title={authenticated ? product.userDetails.name : <span style={blurredStyle}>{product.userDetails.name}</span>}
           subheader={`Published: ${itemPostCreatedDate}`}
         />
       <Box sx={{ pt: '100%', position: 'relative' }}>

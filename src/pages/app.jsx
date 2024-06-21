@@ -1,7 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 
-import { ProductsView } from 'src/sections/products/view';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
+
 import { useGetItemsQuery } from 'src/redux/services/apiSlice';
+
+import SkeletonView from 'src/components/skeletonView';
+
+import { ProductsView } from 'src/sections/products/view';
 
 // ----------------------------------------------------------------------
 
@@ -9,7 +16,7 @@ export default function AppPage() {
 
   const {data, isLoading} = useGetItemsQuery();
   
-  if (isLoading) return <div>Loading....</div>;
+  if (isLoading) return <SkeletonView />
 
   return (
     <>

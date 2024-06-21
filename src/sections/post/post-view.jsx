@@ -24,6 +24,7 @@ const Post = () => {
   const auth = useAuth();
   const user = auth.currentUser;
   const user1 = useSelector((state) => state.user.currentUser);
+  const [isClicked, setIsClicked] = useState(false);
 
 
   const [title, setTitle] = useState("");
@@ -32,7 +33,7 @@ const Post = () => {
   const [image, setImage] = useState(null);
   const [addItem] = useAddItemMutation(); // RTK Query mutation hook
   const [categoryId, setcategoryId] = useState("");
-  const [userId, setUserId] = useState(user1 && user1.id);
+  const [userId, setUserId] = useState(user && user.id);
   const [status, setStatus] = useState(true);
   const { data, isError, isLoading } = useGetCagtegoriesQuery();
   const [address, setAddress] = useState({
@@ -76,6 +77,7 @@ const Post = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Validate input fields
+    if(!isClicked) setIsClicked(true)
     if (!title || !description || !price) {
       alert("Please fill in all fields");
       return;
@@ -186,28 +188,6 @@ const Post = () => {
           required
         />
 
-        {/* <Select
-          name="state"
-          value={address.state}
-          onChange={handleAddressChange}
-          fullWidth
-          margin="dense"
-          displayEmpty
-          required
-        >
-          <MenuItem value="" disabled>
-            Select a State
-          </MenuItem>
-          {USStates.map(function (state) {
-              return (
-                <MenuItem value={state.name} key={state.name}>
-                  {state.name}
-                </MenuItem>
-              );
-            })}
-        </Select> */}
-
-
       <Autocomplete
         value={address.state}
         onChange={(e,newVal) => handleState(newVal)}
@@ -239,6 +219,7 @@ const Post = () => {
           variant="contained"
           color="primary"
           style={{ marginTop: "1rem" }}
+          disabled = {isClicked}
           >
           Submit
         </Button>
