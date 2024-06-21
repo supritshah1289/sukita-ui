@@ -33,7 +33,7 @@ const Post = () => {
   const [image, setImage] = useState(null);
   const [addItem] = useAddItemMutation(); // RTK Query mutation hook
   const [categoryId, setcategoryId] = useState("");
-  const [userId, setUserId] = useState(user1 && user1.id);
+  const [userId, setUserId] = useState(user && user.id);
   const [status, setStatus] = useState(true);
   const { data, isError, isLoading } = useGetCagtegoriesQuery();
   const [address, setAddress] = useState({
@@ -187,28 +187,6 @@ const Post = () => {
           margin="normal"
           required
         />
-
-        {/* <Select
-          name="state"
-          value={address.state}
-          onChange={handleAddressChange}
-          fullWidth
-          margin="dense"
-          displayEmpty
-          required
-        >
-          <MenuItem value="" disabled>
-            Select a State
-          </MenuItem>
-          {USStates.map(function (state) {
-              return (
-                <MenuItem value={state.name} key={state.name}>
-                  {state.name}
-                </MenuItem>
-              );
-            })}
-        </Select> */}
-
 
       <Autocomplete
         value={address.state}
