@@ -15,6 +15,11 @@ export const apiSlice = createApi({
       headers.set('Access-Control-Allow-Origin', '*')
       headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
     }
+
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*')
+    headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+
     return headers;
   },
   tagTypes: ["ITEMS"], // Define tag types for grouping endpoints
