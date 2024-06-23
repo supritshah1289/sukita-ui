@@ -11,7 +11,7 @@ export const apiSlice = createApi({
   prepareHeaders: (headers, { getState }) => {
 
     headers.set('Content-Type', 'application/json');
-    headers.set('Access-Control-Allow-Origin', 'https://www.desilekh.com')
+    // headers.set('Access-Control-Allow-Origin', 'https://www.desilekh.com')
     headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
 
     const token = getState().user.token;
