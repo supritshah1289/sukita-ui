@@ -60,7 +60,5 @@
     "prettier": "^3.0.3",
     "vite": "^4.4.11",
     "vite-plugin-checker": "^0.6.2"
-  },
-  "proxy": "https://supritshah.com"
-
+  }
 }
