@@ -9,16 +9,18 @@ export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().user.token;
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
-      headers.set('Access-Control-Allow-Origin', '*')
-      headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-    }
 
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*')
     headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+
+    const token = getState().user.token;
+    //commented code below to test headers 
+    // if (token) {
+    //   headers.set('Authorization', `Bearer ${token}`);
+    //   headers.set('Access-Control-Allow-Origin', '*')
+    //   headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+    // }
 
     return headers;
   },
