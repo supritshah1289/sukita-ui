@@ -56,6 +56,10 @@ const Post = () => {
     });
   }
 
+//TODO: Add address validation
+
+
+
   const handleAddressChange = (e) => {
     const value = e.target.value;
     setAddress({
