@@ -98,14 +98,7 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign in to Desilekh</Typography>
-
-          <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-              Get started
-            </Link>
-          </Typography>
+          <Typography variant="h4">Sign in using Google</Typography>
 
           <Stack direction="row" spacing={2}>
             <Button
@@ -113,7 +106,7 @@ export default function LoginView() {
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{ borderColor: alpha(theme.palette.grey[500], 0.50) }}
               href={GOOGLE_AUTH_URL}
             >
               <Iconify icon="eva:google-fill" color="#DF3E30" />
