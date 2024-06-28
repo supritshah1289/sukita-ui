@@ -1,17 +1,18 @@
-import moment from "moment";
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Avatar from "@mui/material/Avatar";
+import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import CardHeader from "@mui/material/CardHeader";
-import IconButton from "@mui/material/IconButton";
-import CardActions from "@mui/material/CardActions";
+import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
+import CardActions from '@mui/material/CardActions';
 import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
 
 import { useAuth } from 'src/hooks/AuthProvider';
 
@@ -20,6 +21,7 @@ import { fCurrency } from 'src/utils/format-number';
 import { useDeleteItemMutation, useUserEmailByIdMutation } from 'src/redux/services/apiSlice';
 
 import Iconify from 'src/components/iconify';
+import { colors } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -27,26 +29,23 @@ export default function ShopProductCard({ product, isMyItem }) {
   const [getUserEmail, { isEmailLoading, isEmailError }] = useUserEmailByIdMutation();
   const [deleteItem, { isLoading, isError }] = useDeleteItemMutation();
   const auth = useAuth();
-  const {authenticated} = auth;
-  const address = product.address[0] ? product.address[0] :"";
-  
+  const { authenticated } = auth;
+  const address = product.address[0] ? product.address[0] : '';
 
   const handleDelete = async () => {
     try {
       // Call the deleteItem mutation function with the item ID as an argument
       const response = await deleteItem(product.id);
-      // TODO: toast notify user 
-      toast.success("Item deleted successfully:", response, {
+      // TODO: toast notify user
+      toast.success('Item deleted successfully:', response, {
         position: toast.POSITION.TOP_CENTER,
       });
-
     } catch (error) {
-      console.error("Error deleting item:", error);
+      console.error('Error deleting item:', error);
     }
   };
 
   const handleGetUserByEmail = async () => {
-
     try {
       const response = await getUserEmail(product.userDetails.id);
       const recipientEmail = response.data.email;
@@ -54,21 +53,17 @@ export default function ShopProductCard({ product, isMyItem }) {
       const mailtoUrl = `mailto:${recipientEmail}?subject=${subject}`;
       window.location.href = mailtoUrl;
     } catch (error) {
-      console.log("User by id does not exist: ", error);
+      console.log('User by id does not exist: ', error);
     }
   };
 
-  let itemPostCreatedDate = moment(product.createdAt).format("MMMM Do YYYY");
+  let itemPostCreatedDate = moment(product.createdAt).format('MMMM Do YYYY');
 
   const renderImg = (
     <Box
       component="img"
       alt={product.name}
-      src={
-        product.uploads.length > 0
-          ? `data:image/jpeg;base64,${product.uploads[0].image}`
-          : ""
-      }
+      src={product.uploads.length > 0 ? `data:image/jpeg;base64,${product.uploads[0].image}` : ''}
       sx={{
         top: 0,
         width: 1,
@@ -86,34 +81,30 @@ export default function ShopProductCard({ product, isMyItem }) {
     </Typography>
   );
 
-
-
   const renderActions = (
-    <Stack direction="row"  justifyContent="space-between">
-          <CardActions disableSpacing>
-            
-            { isMyItem ? 
-            (
-               <IconButton aria-label="delete" onClick={handleDelete}>
-                <Iconify icon="ic:twotone-delete" />
-               </IconButton>
-            ) : 
-            (
-            <>
+    <Stack direction="row" justifyContent="space-between">
+      <CardActions disableSpacing>
+        {isMyItem ? (
+          <IconButton aria-label="delete" onClick={handleDelete}>
+            <Iconify icon="ic:twotone-delete" />
+          </IconButton>
+        ) : (
+          <>
+            <Tooltip title="Save">
               <IconButton aria-label="add to favorites">
                 <Iconify icon="ic:baseline-favorite" />
               </IconButton>
+            </Tooltip>
+            <Tooltip title="Contact seller">
               <IconButton aria-label="share" onClick={handleGetUserByEmail}>
                 <Iconify icon="streamline:send-email" />
               </IconButton>
-            </>
-            ) 
-            }
-
-          </CardActions>
-        </Stack>
+            </Tooltip>
+          </>
+        )}
+      </CardActions>
+    </Stack>
   );
-
 
   const blurredStyle = {
     filter: authenticated ? 'none' : 'blur(5px)',
@@ -122,41 +113,43 @@ export default function ShopProductCard({ product, isMyItem }) {
   return (
     <Card>
       <CardHeader
-          avatar={
-            <Avatar
-              src={product.userDetails.imageUrl}
-              style={blurredStyle}
-            ></Avatar>
-          }
-          title={authenticated ? product.userDetails.name : <span style={blurredStyle}>{product.userDetails.name}</span>}
-          subheader={`Published: ${itemPostCreatedDate}`}
-        />
-      <Box sx={{ pt: '100%', position: 'relative' }}>
-        {renderImg}
-      </Box>
+        avatar={<Avatar src={product.userDetails.imageUrl} style={blurredStyle}></Avatar>}
+        title={
+          authenticated ? (
+            product.userDetails.name
+          ) : (
+            <span style={blurredStyle}>{product.userDetails.name}</span>
+          )
+        }
+        subheader={`Published: ${itemPostCreatedDate}`}
+      />
+      <Box sx={{ pt: '100%', position: 'relative' }}>{renderImg}</Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
           {product.title}
         </Link>
-        
+
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Stack component="span" direction="column" alignItems="center"  >
-          {product.description}
+          <Stack component="span" direction="column" alignItems="center">
+            {product.description}
           </Stack>
-          <Stack component="span" direction="column" alignItems="center"  >
+          <Stack component="span" direction="column" alignItems="center">
             Price: {renderPrice}
           </Stack>
         </Stack>
 
-        <Divider />   
+        <Divider />
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-        {address.city ? address.city : ""},{address.state ? address.state : ""}
+          <Tooltip title="Location">
+            <Iconify icon="gis:location-poi" sx={{ colors: '#dd1313' }} />
+          </Tooltip>
+          {address.city ? address.city : ''},{address.state ? address.state : ''}
         </Stack>
 
-        <Divider />  
-        { authenticated ? renderActions :  null }
+        <Divider />
+        {authenticated ? renderActions : null}
       </Stack>
     </Card>
   );
@@ -165,4 +158,3 @@ export default function ShopProductCard({ product, isMyItem }) {
 ShopProductCard.propTypes = {
   product: PropTypes.object,
 };
-
