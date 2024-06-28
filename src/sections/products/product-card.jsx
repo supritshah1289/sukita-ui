@@ -111,9 +111,22 @@ export default function ShopProductCard({ product, isMyItem }) {
   };
 
   return (
-    <Card>
+    <Card sx={{ boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.4)' }}>
       <CardHeader
-        avatar={<Avatar src={product.userDetails.imageUrl} style={blurredStyle}></Avatar>}
+        sx={{
+          height: 56,
+          padding: 1,
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+        }}
+        avatar={
+          <Avatar
+            sx={{ width: 32, height: 32, marginRight: 1, objectFit: 'cover' }}
+            sx={{ img: { width: '100%', height: '100%' } }}
+            src={product.userDetails.imageUrl}
+            style={blurredStyle}
+          ></Avatar>
+        }
         title={
           authenticated ? (
             product.userDetails.name
@@ -121,25 +134,29 @@ export default function ShopProductCard({ product, isMyItem }) {
             <span style={blurredStyle}>{product.userDetails.name}</span>
           )
         }
-        subheader={`Published: ${itemPostCreatedDate}`}
+        subheader={
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Iconify icon="mdi:calendar-clock" width={16} height={16} />
+            <Typography variant="caption" component="span">
+              {`Published: ${itemPostCreatedDate}`}
+            </Typography>
+          </Stack>
+        }
       />
       <Box sx={{ pt: '100%', position: 'relative' }}>{renderImg}</Box>
 
-      <Stack spacing={2} sx={{ p: 3 }}>
+      <Stack spacing={1} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
           {product.title}
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Stack component="span" direction="column" alignItems="center">
-            {product.description}
-          </Stack>
-          <Stack component="span" direction="column" alignItems="center">
-            Price: {renderPrice}
-          </Stack>
+          {product.description}
+          <Box sx={{ marginLeft: 'auto' }} />
+          {renderPrice}
         </Stack>
 
-        <Divider />
+        <Divider sx={{ borderStyle: 'solid' }} />
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Tooltip title="Location">
