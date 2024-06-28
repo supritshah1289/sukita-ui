@@ -7,7 +7,7 @@ export default function AppPage() {
     <>
 
      <Helmet>
-        <title> Products | Minimal UI </title>
+        <title> Products | Desilekh  </title>
       </Helmet>
 
     <PostView />
