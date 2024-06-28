@@ -11,9 +11,8 @@ import ProductFilters from '../product-filters';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsView({data, isLoading, isMyItem}) {
+export default function ProductsView({ data, isLoading, isMyItem }) {
   const [openFilter, setOpenFilter] = useState(false);
-
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -48,11 +47,17 @@ export default function ProductsView({data, isLoading, isMyItem}) {
       </Stack> */}
 
       <Grid container spacing={3}>
-        {!!data && data.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} isLoading={isLoading} isMyItem={isMyItem} />
-          </Grid>
-        ))}
+        {!!data &&
+          data.map((product) => (
+            <Grid key={product.id} xs={12} sm={6} md={3} style={{ display: 'flex' }}>
+              <ProductCard
+                product={product}
+                isLoading={isLoading}
+                isMyItem={isMyItem}
+                sx={{ height: '100%' }}
+              />
+            </Grid>
+          ))}
       </Grid>
     </Container>
   );

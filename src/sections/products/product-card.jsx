@@ -145,7 +145,8 @@ export default function ShopProductCard({ product, isMyItem }) {
           <Tooltip title="Location">
             <Iconify icon="gis:location-poi" sx={{ colors: '#dd1313' }} />
           </Tooltip>
-          {address.city ? address.city : ''},{address.state ? address.state : ''}
+          {address.city ? address.city.charAt(0).toUpperCase() + address.city.slice(1) : ''},
+          {address.state ? address.state.charAt(0).toUpperCase() + address.state.slice(1) : ''}
         </Stack>
 
         <Divider />
