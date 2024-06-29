@@ -1,18 +1,21 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
+import { colors } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import CardActions from '@mui/material/CardActions';
-import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
 
 import { useAuth } from 'src/hooks/AuthProvider';
 
@@ -21,7 +24,6 @@ import { fCurrency } from 'src/utils/format-number';
 import { useDeleteItemMutation, useUserEmailByIdMutation } from 'src/redux/services/apiSlice';
 
 import Iconify from 'src/components/iconify';
-import { colors } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +33,29 @@ export default function ShopProductCard({ product, isMyItem }) {
   const auth = useAuth();
   const { authenticated } = auth;
   const address = product.address[0] ? product.address[0] : '';
+  const description = product.description;
+
+  const maxLength = 100; // Maximum characters to display initially
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  // Function to toggle between full and truncated description
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  // Determine which version of the description to display
+  const displayDescription = showFullDescription ? description : description.slice(0, maxLength) + '...';
+
+  const renderDescription = (
+    <Typography variant="body1" sx={{ '& button': { p: 0 } }}>
+      {displayDescription}
+      {!showFullDescription && description.length > maxLength && (
+        <Button size="small" onClick={toggleDescription}>
+          more
+        </Button>
+      )}
+    </Typography>
+  );
 
   const handleDelete = async () => {
     try {
@@ -70,6 +95,7 @@ export default function ShopProductCard({ product, isMyItem }) {
         height: 1,
         objectFit: 'cover',
         position: 'absolute',
+        padding: 2
       }}
     />
   );
@@ -108,6 +134,7 @@ export default function ShopProductCard({ product, isMyItem }) {
 
   const blurredStyle = {
     filter: authenticated ? 'none' : 'blur(5px)',
+    fontSize: '12px'
   };
 
   return (
@@ -137,7 +164,7 @@ export default function ShopProductCard({ product, isMyItem }) {
         subheader={
           <Stack direction="row" alignItems="center" spacing={1}>
             <Iconify icon="mdi:calendar-clock" width={16} height={16} />
-            <Typography variant="caption" component="span">
+            <Typography variant="caption" component="span"  whiteSpace="pre-wrap">
               {`Published: ${itemPostCreatedDate}`}
             </Typography>
           </Stack>
@@ -150,10 +177,12 @@ export default function ShopProductCard({ product, isMyItem }) {
           {product.title}
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {product.description}
-          <Box sx={{ marginLeft: 'auto' }} />
-          {renderPrice}
+        <Stack direction="row" alignItems="center" style={{ textAlign: 'justify' }} justifyContent="space-between">
+          {renderDescription}
+        </Stack>
+
+        <Stack direction="row" spacing={1}>
+            {renderPrice}
         </Stack>
 
         <Divider sx={{ borderStyle: 'solid' }} />
