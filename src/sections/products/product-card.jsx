@@ -106,10 +106,6 @@ export default function ShopProductCard({ product, isMyItem }) {
     </Stack>
   );
 
-  const blurredStyle = {
-    filter: authenticated ? 'none' : 'blur(5px)',
-  };
-
   return (
     <Card sx={{ boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.4)' }}>
       <CardHeader
@@ -121,18 +117,19 @@ export default function ShopProductCard({ product, isMyItem }) {
         }}
         avatar={
           <Avatar
-            sx={{ width: 32, height: 32, marginRight: 1, objectFit: 'cover' }}
-            sx={{ img: { width: '100%', height: '100%' } }}
-            src={product.userDetails.imageUrl}
-            style={blurredStyle}
+            sx={{
+              width: 30,
+              height: 30,
+              marginRight: 1,
+              objectFit: 'cover',
+            }}
+            src={authenticated ? product.userDetails.imageUrl : ''}
           ></Avatar>
         }
         title={
-          authenticated ? (
-            product.userDetails.name
-          ) : (
-            <span style={blurredStyle}>{product.userDetails.name}</span>
-          )
+          <Typography variant="caption" component="span">
+            {authenticated ? product.userDetails.name : 'Login to connect'}
+          </Typography>
         }
         subheader={
           <Stack direction="row" alignItems="center" spacing={1}>
