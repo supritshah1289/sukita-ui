@@ -125,7 +125,7 @@ export default function ShopProductCard({ product, isMyItem }) {
             </Tooltip>
             <Tooltip title="Contact seller">
               <IconButton aria-label="share" onClick={handleGetUserByEmail}>
-                <Iconify icon="streamline:send-email" />
+                <Iconify icon="dashicons:email-alt" />
               </IconButton>
             </Tooltip>
           </>
@@ -175,12 +175,7 @@ export default function ShopProductCard({ product, isMyItem }) {
           {product.title}
         </Link>
 
-        <Stack
-          direction="row"
-          alignItems="center"
-          style={{ textAlign: 'justify' }}
-          justifyContent="space-between"
-        >
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
           {renderDescription}
         </Stack>
 
