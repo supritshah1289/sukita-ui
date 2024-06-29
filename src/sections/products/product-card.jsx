@@ -44,7 +44,9 @@ export default function ShopProductCard({ product, isMyItem }) {
   };
 
   // Determine which version of the description to display
-  const displayDescription = showFullDescription ? description : description.slice(0, maxLength) + '...';
+  const displayDescription = showFullDescription
+    ? description
+    : description.slice(0, maxLength) + '...';
 
   const renderDescription = (
     <Typography variant="body1" sx={{ '& button': { p: 0 } }}>
@@ -95,7 +97,7 @@ export default function ShopProductCard({ product, isMyItem }) {
         height: 1,
         objectFit: 'cover',
         position: 'absolute',
-        padding: 2
+        padding: 2,
       }}
     />
   );
@@ -132,11 +134,6 @@ export default function ShopProductCard({ product, isMyItem }) {
     </Stack>
   );
 
-  const blurredStyle = {
-    filter: authenticated ? 'none' : 'blur(5px)',
-    fontSize: '12px'
-  };
-
   return (
     <Card sx={{ boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.4)' }}>
       <CardHeader
@@ -148,23 +145,24 @@ export default function ShopProductCard({ product, isMyItem }) {
         }}
         avatar={
           <Avatar
-            sx={{ width: 32, height: 32, marginRight: 1, objectFit: 'cover' }}
-            sx={{ img: { width: '100%', height: '100%' } }}
-            src={product.userDetails.imageUrl}
-            style={blurredStyle}
+            sx={{
+              width: 30,
+              height: 30,
+              marginRight: 1,
+              objectFit: 'cover',
+            }}
+            src={authenticated ? product.userDetails.imageUrl : ''}
           ></Avatar>
         }
         title={
-          authenticated ? (
-            product.userDetails.name
-          ) : (
-            <span style={blurredStyle}>{product.userDetails.name}</span>
-          )
+          <Typography variant="caption" component="span">
+            {authenticated ? product.userDetails.name : 'Login to connect'}
+          </Typography>
         }
         subheader={
           <Stack direction="row" alignItems="center" spacing={1}>
             <Iconify icon="mdi:calendar-clock" width={16} height={16} />
-            <Typography variant="caption" component="span"  whiteSpace="pre-wrap">
+            <Typography variant="caption" component="span" whiteSpace="pre-wrap">
               {`Published: ${itemPostCreatedDate}`}
             </Typography>
           </Stack>
@@ -177,12 +175,17 @@ export default function ShopProductCard({ product, isMyItem }) {
           {product.title}
         </Link>
 
-        <Stack direction="row" alignItems="center" style={{ textAlign: 'justify' }} justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          style={{ textAlign: 'justify' }}
+          justifyContent="space-between"
+        >
           {renderDescription}
         </Stack>
 
         <Stack direction="row" spacing={1}>
-            {renderPrice}
+          {renderPrice}
         </Stack>
 
         <Divider sx={{ borderStyle: 'solid' }} />
