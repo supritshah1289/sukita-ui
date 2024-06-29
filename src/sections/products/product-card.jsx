@@ -135,7 +135,13 @@ export default function ShopProductCard({ product, isMyItem }) {
   );
 
   return (
-    <Card sx={{ boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.4)' }}>
+    <Card
+      sx={{
+        boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.4)',
+        width: '100%',
+        maxWidth: '100%',
+      }}
+    >
       <CardHeader
         sx={{
           height: 56,
